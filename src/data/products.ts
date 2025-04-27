@@ -60,7 +60,7 @@ export const products: Product[] = [
     category: 'cosmetics',
     subcategory: 'makeup',
     image: '/placeholder.svg',
-    description: 'Long-lasting matte lipstick that doesn't dry your lips.',
+    description: "Long-lasting matte lipstick that doesn't dry your lips.",
     brand: 'GlowUp',
     colors: ['Ruby Red', 'Coral Pink', 'Dusty Rose', 'Nude'],
     rating: 4.7,

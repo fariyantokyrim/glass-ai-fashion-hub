@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Navigation } from '../components/Navigation';
@@ -50,12 +49,11 @@ const Index = () => {
             <div className="glass-card bg-gradient-to-r from-sky-400 to-blue-500 p-6 rounded-xl text-white">
               <h3 className="text-2xl font-bold mb-2">New Arrivals! 🎉</h3>
               <p className="text-white/90 mb-4">Get 50% off on all new products</p>
-              <Link 
-                to="/fashion" 
+              <button 
                 className="inline-block bg-white/20 hover:bg-white/30 px-4 py-2 rounded-full text-sm backdrop-blur-sm transition-all"
               >
                 Shop Now
-              </Link>
+              </button>
             </div>
           </div>
 

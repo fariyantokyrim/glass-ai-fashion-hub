@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -9,7 +10,9 @@ import { AuthProvider } from "./contexts/AuthContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ProductDetail from "./pages/ProductDetail";
-import CategoryPage from "./pages/CategoryPage";
+import FashionPage from "./pages/FashionPage";
+import CosmeticsPage from "./pages/CosmeticsPage";
+import AccessoriesPage from "./pages/AccessoriesPage";
 import VirtualFittingPage from "./pages/VirtualFittingPage";
 import VirtualTrialPage from "./pages/VirtualTrialPage";
 import ProfilePage from "./pages/ProfilePage";
@@ -34,9 +37,9 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/search" element={<Index />} />
             <Route path="/product/:id" element={<ProductDetail />} />
-            <Route path="/fashion" element={<CategoryPage />} />
-            <Route path="/cosmetics" element={<CategoryPage />} />
-            <Route path="/accessories" element={<CategoryPage />} />
+            <Route path="/fashion" element={<FashionPage />} />
+            <Route path="/cosmetics" element={<CosmeticsPage />} />
+            <Route path="/accessories" element={<AccessoriesPage />} />
             <Route path="/virtual-fitting/:id" element={<VirtualFittingPage />} />
             <Route path="/virtual-trial/:id" element={<VirtualTrialPage />} />
             <Route path="/accessories-trial/:id" element={<VirtualTrialPage />} />

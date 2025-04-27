@@ -3,6 +3,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Navigation } from '../components/Navigation';
 import { ArrowLeft } from 'lucide-react';
+import { ProductCard } from '../components/ProductCard';
+import { products } from '../data/products';
+
+const sampleWishlistProducts = products.slice(0, 4); // Get first 4 products as sample
 
 const WishlistPage = () => {
   return (
@@ -19,8 +23,10 @@ const WishlistPage = () => {
 
       {/* Wishlist items */}
       <div className="p-4">
-        <div className="glass-card p-6">
-          <p className="text-center text-muted-foreground">No items in wishlist</p>
+        <div className="grid grid-cols-2 gap-3">
+          {sampleWishlistProducts.map(product => (
+            <ProductCard key={product.id} product={product} />
+          ))}
         </div>
       </div>
 

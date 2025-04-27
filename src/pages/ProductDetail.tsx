@@ -1,6 +1,7 @@
+
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Heart, ShoppingCart } from 'lucide-react';
+import { ArrowLeft, Heart, ShoppingCart, Star } from 'lucide-react';
 import { getProductById } from '../data/products';
 import { useToast } from '../hooks/use-toast';
 

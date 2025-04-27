@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Navigation } from '../components/Navigation';
-import { LogOut, Settings, History, Heart, HelpCircle, ShoppingBag, MessageSquare } from 'lucide-react';
+import { LogOut, Settings, ShoppingBag, Heart, HelpCircle, MessageSquare } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../hooks/use-toast';
 
@@ -83,20 +82,15 @@ const ProfilePage = () => {
             <span className="flex-1">Wishlist</span>
           </Link>
           
-          <Link to="/history" className="flex items-center p-4 transition-all hover:bg-white/10">
-            <History size={20} className="mr-3" />
-            <span className="flex-1">Browsing History</span>
-          </Link>
-          
           <Link to="/chat" className="flex items-center p-4 transition-all hover:bg-white/10">
             <MessageSquare size={20} className="mr-3" />
             <span className="flex-1">Chat with AI</span>
           </Link>
           
-          <Link to="/settings" className="flex items-center p-4 transition-all hover:bg-white/10">
+          <div className="flex items-center p-4 transition-all hover:bg-white/10">
             <Settings size={20} className="mr-3" />
             <span className="flex-1">Account Settings</span>
-          </Link>
+          </div>
           
           <Link to="/help" className="flex items-center p-4 transition-all hover:bg-white/10">
             <HelpCircle size={20} className="mr-3" />

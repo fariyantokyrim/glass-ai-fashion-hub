@@ -1,41 +1,30 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Camera, ChevronLeft, ChevronRight } from 'lucide-react';
 import { getProductById } from '../data/products';
 import { useToast } from '../hooks/use-toast';
 
 type UserMeasurements = {
-  height: string;
-  weight: string;
-  chestSize: string;
   skinTone: string;
+  faceShape?: string;
 };
 
-const VirtualFittingPage = () => {
+const VirtualTrialPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { toast } = useToast();
   const product = id ? getProductById(id) : undefined;
   
   const [measurements, setMeasurements] = useState<UserMeasurements>({
-    height: '',
-    weight: '',
-    chestSize: '',
     skinTone: 'medium',
+    faceShape: 'oval',
   });
 
   const [selectedFilter, setSelectedFilter] = useState<string>('Natural');
   const filters = ['Natural', 'Warm', 'Cool', 'Vintage', 'Bright'];
   
   const [submitted, setSubmitted] = useState(false);
-
-  // Special handling for category pages
-  useEffect(() => {
-    if (id === 'fashion' || id === 'cosmetics' || id === 'accessories') {
-      setSubmitted(false);
-    }
-  }, [id]);
 
   const handleGoBack = () => {
     navigate(-1);
@@ -52,43 +41,28 @@ const VirtualFittingPage = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validate required fields based on category
-    if (id === 'fashion' || id === 'cosmetics' || id === 'accessories' || product?.category === 'fashion') {
-      if (!measurements.height || !measurements.weight || !measurements.skinTone) {
-        toast({
-          title: "Error",
-          description: "Please fill out all required measurements",
-          variant: "destructive"
-        });
-        return;
-      }
+    if (!measurements.skinTone) {
+      toast({
+        title: "Error",
+        description: "Please select your skin tone",
+        variant: "destructive"
+      });
+      return;
     }
     
     setSubmitted(true);
     
     toast({
-      title: "Measurements submitted",
-      description: "Creating your virtual fitting experience...",
+      title: "Information submitted",
+      description: "Creating your virtual trial experience...",
     });
   };
 
-  // Determine the virtual try-on type based on the id parameter
-  const getVirtualTryTitle = () => {
-    if (id === 'fashion' || product?.category === 'fashion') {
-      return 'Fashion Virtual Try-On';
-    } else if (id === 'cosmetics' || product?.category === 'cosmetics') {
-      return 'Cosmetics Virtual Trial';
-    } else if (id === 'accessories' || product?.category === 'accessories') {
-      return 'Accessories Virtual Try-On';
-    }
-    return 'Virtual Try-On';
-  };
+  // Determine the type of product
+  const isCosmetics = product?.category === 'cosmetics' || id === 'cosmetics';
+  const isAccessories = product?.category === 'accessories' || id === 'accessories';
 
-  // Check if we're showing a category virtual try-on or a specific product
-  const isCategory = id === 'fashion' || id === 'cosmetics' || id === 'accessories';
-  const categoryType = isCategory ? id : product?.category;
-
-  if (!isCategory && !product) {
+  if (!isCosmetics && !isAccessories && !product) {
     return (
       <div className="flex h-screen items-center justify-center">
         <p>Product not found</p>
@@ -103,13 +77,15 @@ const VirtualFittingPage = () => {
         <button onClick={handleGoBack} className="glass-button p-2 rounded-full mr-2 transition-all hover:bg-white/30">
           <ArrowLeft size={20} />
         </button>
-        <h1 className="text-lg font-semibold flex-1">{getVirtualTryTitle()}</h1>
+        <h1 className="text-lg font-semibold flex-1">
+          {isCosmetics ? "Cosmetics Virtual Trial" : "Accessories Virtual Try-On"}
+        </h1>
       </div>
 
       <div className="p-4">
         {!submitted ? (
           <>
-            {!isCategory && product && (
+            {product && (
               <div className="glass-card p-4 mb-6">
                 <div className="flex items-center mb-4">
                   <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-100 mr-3">
@@ -126,70 +102,36 @@ const VirtualFittingPage = () => {
                 </div>
                 
                 <p className="text-sm mb-4">
-                  To create an accurate virtual fitting, please provide your measurements:
+                  {isCosmetics ? 
+                    "To create an accurate virtual makeup trial, please provide the following:" :
+                    "To see how these accessories will look on you, please provide the following:"}
                 </p>
               </div>
             )}
 
-            {isCategory && (
+            {!product && (
               <div className="glass-card p-4 mb-6">
                 <div className="text-center mb-3">
-                  <h2 className="font-semibold mb-2">{getVirtualTryTitle()}</h2>
+                  <h2 className="font-semibold mb-2">
+                    {isCosmetics ? "Cosmetics Virtual Trial" : "Accessories Virtual Try-On"}
+                  </h2>
                   <p className="text-sm text-muted-foreground">
-                    {categoryType === 'fashion' && 'Try on clothing virtually with AI technology'}
-                    {categoryType === 'cosmetics' && 'Try makeup products virtually with AI technology'}
-                    {categoryType === 'accessories' && 'Try accessories virtually with AI technology'}
+                    {isCosmetics ? 
+                      "Try makeup products virtually with AI technology" : 
+                      "Try accessories virtually with AI technology"}
                   </p>
                 </div>
                 
                 <p className="text-sm mb-4">
-                  To create an accurate virtual experience, please provide your measurements:
+                  {isCosmetics ?
+                    "To provide an accurate virtual makeup experience, please tell us about yourself:" :
+                    "To create an accurate virtual accessories try-on, please tell us about yourself:"}
                 </p>
               </div>
             )}
 
             <form onSubmit={handleSubmit}>
               <div className="space-y-4">
-                <div>
-                  <label className="block mb-1 text-sm">Height (cm) <span className="text-red-500">*</span></label>
-                  <input
-                    type="number"
-                    name="height"
-                    value={measurements.height}
-                    onChange={handleChange}
-                    className="glass-input w-full px-3 py-2 rounded-lg"
-                    placeholder="Enter your height in cm"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label className="block mb-1 text-sm">Weight (kg) <span className="text-red-500">*</span></label>
-                  <input
-                    type="number"
-                    name="weight"
-                    value={measurements.weight}
-                    onChange={handleChange}
-                    className="glass-input w-full px-3 py-2 rounded-lg"
-                    placeholder="Enter your weight in kg"
-                    required
-                  />
-                </div>
-                
-                {(categoryType === 'fashion') && (
-                  <div>
-                    <label className="block mb-1 text-sm">Chest Size (cm)</label>
-                    <input
-                      type="number"
-                      name="chestSize"
-                      value={measurements.chestSize}
-                      onChange={handleChange}
-                      className="glass-input w-full px-3 py-2 rounded-lg"
-                      placeholder="Enter your chest circumference"
-                    />
-                  </div>
-                )}
-                
                 <div>
                   <label className="block mb-1 text-sm">Skin Tone <span className="text-red-500">*</span></label>
                   <select
@@ -209,11 +151,28 @@ const VirtualFittingPage = () => {
                   </select>
                 </div>
                 
+                <div>
+                  <label className="block mb-1 text-sm">Face Shape</label>
+                  <select
+                    name="faceShape"
+                    value={measurements.faceShape}
+                    onChange={handleChange}
+                    className="glass-input w-full px-3 py-2 rounded-lg"
+                  >
+                    <option value="oval">Oval</option>
+                    <option value="round">Round</option>
+                    <option value="square">Square</option>
+                    <option value="heart">Heart</option>
+                    <option value="diamond">Diamond</option>
+                    <option value="rectangle">Rectangle</option>
+                  </select>
+                </div>
+                
                 <button 
                   type="submit" 
                   className="bg-primary glass-button text-primary-foreground w-full px-4 py-3 rounded-lg mt-4 transition-all hover:bg-primary/80"
                 >
-                  Continue to Virtual Try-On
+                  {isCosmetics ? "Continue to Virtual Makeup Trial" : "Continue to Virtual Try-On"}
                 </button>
               </div>
             </form>
@@ -222,7 +181,9 @@ const VirtualFittingPage = () => {
           <div className="flex flex-col items-center justify-center">
             <div className="glass-card p-6 flex flex-col items-center">
               <Camera size={48} className="mb-4 text-primary" />
-              <h2 className="text-xl font-semibold mb-2">AI Virtual Try-On</h2>
+              <h2 className="text-xl font-semibold mb-2">
+                {isCosmetics ? "AI Makeup Trial" : "AI Accessories Try-On"}
+              </h2>
               
               <div className="w-full aspect-square bg-gray-100 rounded-lg overflow-hidden mb-6 relative">
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -232,21 +193,9 @@ const VirtualFittingPage = () => {
                     </div>
                   </div>
                 </div>
-                {categoryType === 'fashion' && (
-                  <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-center py-2 text-sm">
-                    Try on virtual clothing
-                  </div>
-                )}
-                {categoryType === 'cosmetics' && (
-                  <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-center py-2 text-sm">
-                    Try on virtual makeup
-                  </div>
-                )}
-                {categoryType === 'accessories' && (
-                  <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-center py-2 text-sm">
-                    Try on virtual accessories
-                  </div>
-                )}
+                <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-center py-2 text-sm">
+                  {isCosmetics ? "Try on virtual makeup" : "Try on virtual accessories"}
+                </div>
               </div>
               
               <div className="w-full mb-6">
@@ -272,12 +221,10 @@ const VirtualFittingPage = () => {
               </div>
               
               <div className="glass p-4 rounded-lg w-full mb-4">
-                <h3 className="font-medium mb-2">Your Measurements:</h3>
+                <h3 className="font-medium mb-2">Your Information:</h3>
                 <ul className="space-y-1 text-sm">
-                  <li>Height: {measurements.height} cm</li>
-                  <li>Weight: {measurements.weight} kg</li>
-                  {measurements.chestSize && <li>Chest Size: {measurements.chestSize} cm</li>}
                   <li>Skin Tone: {measurements.skinTone.replace('-', ' ')}</li>
+                  {measurements.faceShape && <li>Face Shape: {measurements.faceShape}</li>}
                 </ul>
               </div>
               
@@ -286,13 +233,13 @@ const VirtualFittingPage = () => {
                   onClick={handleGoBack}
                   className="glass-button w-full px-4 py-2 rounded-lg mb-2 transition-all hover:bg-white/30"
                 >
-                  Try Different Measurements
+                  Try Different Parameters
                 </button>
                 <button 
-                  onClick={() => product ? navigate(`/product/${product.id}`) : navigate(`/${categoryType}`)}
+                  onClick={() => product ? navigate(`/product/${product.id}`) : navigate(`/${isCosmetics ? 'cosmetics' : 'accessories'}`)}
                   className="bg-primary glass-button text-primary-foreground w-full px-4 py-2 rounded-lg transition-all hover:bg-primary/80"
                 >
-                  {product ? 'Return to Product' : `Browse ${categoryType}`}
+                  {product ? 'Return to Product' : `Browse ${isCosmetics ? 'Cosmetics' : 'Accessories'}`}
                 </button>
               </div>
             </div>
@@ -303,4 +250,4 @@ const VirtualFittingPage = () => {
   );
 };
 
-export default VirtualFittingPage;
+export default VirtualTrialPage;

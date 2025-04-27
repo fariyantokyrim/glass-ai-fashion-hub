@@ -17,6 +17,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             src={product.image} 
             alt={product.name} 
             className="w-full h-full object-cover"
+            loading="lazy"
           />
         </div>
         <h3 className="font-medium text-sm line-clamp-1">{product.name}</h3>

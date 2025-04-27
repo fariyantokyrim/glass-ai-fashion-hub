@@ -19,11 +19,9 @@ const ProfilePage = () => {
     navigate('/login');
   };
 
-  // If no user, show a message with links to login/register
   if (!user) {
     return (
       <div className="pb-20">
-        {/* Header */}
         <div className="glass sticky top-0 z-40 px-4 py-3">
           <h1 className="text-xl font-semibold">Profile</h1>
         </div>
@@ -51,12 +49,10 @@ const ProfilePage = () => {
 
   return (
     <div className="pb-20">
-      {/* Header */}
       <div className="glass sticky top-0 z-40 px-4 py-3">
         <h1 className="text-xl font-semibold">Profile</h1>
       </div>
 
-      {/* User info */}
       <div className="p-4">
         <div className="glass-card p-6 flex items-center">
           <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center">
@@ -69,7 +65,6 @@ const ProfilePage = () => {
         </div>
       </div>
 
-      {/* Menu items */}
       <div className="p-4">
         <div className="glass-card divide-y divide-white/20">
           <Link to="/orders" className="flex items-center p-4 transition-all hover:bg-white/10">

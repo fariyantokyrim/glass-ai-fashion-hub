@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -92,7 +91,7 @@ const LoginPage = () => {
             
             <button 
               type="submit" 
-              className="bg-primary glass-button text-primary-foreground w-full py-2 rounded-lg"
+              className="bg-primary hover:opacity-90 transition-opacity glass-button text-primary-foreground w-full py-2 rounded-lg"
               disabled={isLoading}
             >
               {isLoading ? 'Signing in...' : 'Sign In'}

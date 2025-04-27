@@ -22,8 +22,8 @@ const Index = () => {
   
   // Select featured products for the carousel
   const featuredProducts = products
-    .sort(() => Math.random() - 0.5) // Randomly shuffle
-    .slice(0, 6); // Take first 6
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 6);
   
   const handleSearch = (query: string) => {
     setSearchQuery(query);
@@ -45,9 +45,23 @@ const Index = () => {
       
       {!searchQuery && (
         <>
-          {/* Recommended Products Carousel */}
+          {/* Promo Banner */}
           <div className="mt-4 px-4">
-            <h2 className="text-lg font-semibold mb-3">Recommended</h2>
+            <div className="glass-card bg-gradient-to-r from-sky-400 to-blue-500 p-6 rounded-xl text-white">
+              <h3 className="text-2xl font-bold mb-2">New Arrivals! 🎉</h3>
+              <p className="text-white/90 mb-4">Get 50% off on all new products</p>
+              <Link 
+                to="/fashion" 
+                className="inline-block bg-white/20 hover:bg-white/30 px-4 py-2 rounded-full text-sm backdrop-blur-sm transition-all"
+              >
+                Shop Now
+              </Link>
+            </div>
+          </div>
+
+          {/* Recommended Products Carousel - made smaller */}
+          <div className="mt-4 px-4">
+            <h2 className="text-lg font-semibold mb-2">Recommended</h2>
             <Carousel className="w-full">
               <CarouselContent>
                 {featuredProducts.map((product) => (
@@ -66,7 +80,7 @@ const Index = () => {
                 {[...Array(6)].map((_, i) => (
                   <div 
                     key={i} 
-                    className="w-2 h-2 rounded-full bg-primary/50"
+                    className="w-1.5 h-1.5 rounded-full bg-primary/50"
                   />
                 ))}
               </div>

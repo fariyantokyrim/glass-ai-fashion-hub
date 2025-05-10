@@ -1,11 +1,13 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
+import { useIsMobile } from "./hooks/use-mobile";
 
-// Pages
+// Mobile Pages
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ProductDetail from "./pages/ProductDetail";
@@ -24,6 +26,25 @@ import MyOrdersPage from "./pages/MyOrdersPage";
 import WishlistPage from "./pages/WishlistPage";
 import HelpPage from "./pages/HelpPage";
 
+// Web Pages
+import WebIndex from "./pages/web/WebIndex";
+import WebFashionPage from "./pages/web/WebFashionPage";
+import WebCosmeticsPage from "./pages/web/WebCosmeticsPage";
+import WebAccessoriesPage from "./pages/web/WebAccessoriesPage";
+import WebProductDetail from "./pages/web/WebProductDetail";
+import WebProfilePage from "./pages/web/WebProfilePage";
+import WebCartPage from "./pages/web/WebCartPage";
+import WebChatPage from "./pages/web/WebChatPage";
+import WebHelpPage from "./pages/web/WebHelpPage";
+import WebMyOrdersPage from "./pages/web/WebMyOrdersPage";
+import WebLoginPage from "./pages/web/WebLoginPage";
+
+// Auto-redirect based on device
+const ResponsiveRedirect = () => {
+  const isMobile = useIsMobile();
+  return isMobile ? <Navigate to="/" /> : <Navigate to="/web" />;
+};
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -34,7 +55,10 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
+            {/* Device Detection Route */}
             <Route path="/" element={<Index />} />
+
+            {/* Mobile Routes */}
             <Route path="/search" element={<Index />} />
             <Route path="/product/:id" element={<ProductDetail />} />
             <Route path="/fashion" element={<FashionPage />} />
@@ -52,6 +76,27 @@ const App = () => (
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/chat" element={<ChatPage />} />
             <Route path="/help" element={<HelpPage />} />
+            
+            {/* Web Routes */}
+            <Route path="/web" element={<WebIndex />} />
+            <Route path="/web/fashion" element={<WebFashionPage />} />
+            <Route path="/web/cosmetics" element={<WebCosmeticsPage />} />
+            <Route path="/web/accessories" element={<WebAccessoriesPage />} />
+            <Route path="/web/product/:id" element={<WebProductDetail />} />
+            <Route path="/web/profile" element={<WebProfilePage />} />
+            <Route path="/web/orders" element={<WebMyOrdersPage />} />
+            <Route path="/web/cart" element={<WebCartPage />} />
+            <Route path="/web/login" element={<WebLoginPage />} />
+            <Route path="/web/chat" element={<WebChatPage />} />
+            <Route path="/web/help" element={<WebHelpPage />} />
+            <Route path="/web/virtual-fitting/:id" element={<VirtualFittingPage />} />
+            <Route path="/web/virtual-trial/:id" element={<VirtualTrialPage />} />
+            <Route path="/web/accessories-trial/:id" element={<VirtualTrialPage />} />
+            <Route path="/web/wishlist" element={<WishlistPage />} />
+            <Route path="/web/register" element={<RegisterPage />} />
+            <Route path="/web/forgot-password" element={<ForgotPasswordPage />} />
+            
+            {/* 404 Route */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

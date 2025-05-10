@@ -136,7 +136,7 @@ const CartPage = () => {
             
             <Link 
               to="/checkout"
-              className="mt-4 bg-primary glass-button text-primary-foreground w-full px-4 py-3 rounded-full flex items-center justify-center"
+              className="mt-4 bg-primary glass-button text-primary-foreground w-full px-4 py-3 rounded-full flex items-center justify-center hover:bg-primary"
             >
               <span>Proceed to Checkout</span>
               <ArrowRight size={16} className="ml-2" />

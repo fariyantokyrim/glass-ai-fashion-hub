@@ -18,6 +18,7 @@ import VirtualFittingPage from "./pages/VirtualFittingPage";
 import VirtualTrialPage from "./pages/VirtualTrialPage";
 import ProfilePage from "./pages/ProfilePage";
 import CartPage from "./pages/CartPage";
+import CheckoutPage from "./pages/CheckoutPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
@@ -34,10 +35,17 @@ import WebAccessoriesPage from "./pages/web/WebAccessoriesPage";
 import WebProductDetail from "./pages/web/WebProductDetail";
 import WebProfilePage from "./pages/web/WebProfilePage";
 import WebCartPage from "./pages/web/WebCartPage";
+import WebCheckoutPage from "./pages/web/WebCheckoutPage";
 import WebChatPage from "./pages/web/WebChatPage";
 import WebHelpPage from "./pages/web/WebHelpPage";
 import WebMyOrdersPage from "./pages/web/WebMyOrdersPage";
 import WebLoginPage from "./pages/web/WebLoginPage";
+import WebVirtualTrialPage from "./pages/web/WebVirtualTrialPage";
+import WebVirtualFittingPage from "./pages/web/WebVirtualFittingPage";
+
+// Admin Pages
+import AdminProductsPage from "./pages/admin/AdminProductsPage";
+import AdminProductForm from "./pages/admin/AdminProductForm";
 
 // Auto-redirect based on device
 const ResponsiveRedirect = () => {
@@ -71,6 +79,7 @@ const App = () => (
             <Route path="/orders" element={<MyOrdersPage />} />
             <Route path="/wishlist" element={<WishlistPage />} />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
@@ -86,15 +95,21 @@ const App = () => (
             <Route path="/web/profile" element={<WebProfilePage />} />
             <Route path="/web/orders" element={<WebMyOrdersPage />} />
             <Route path="/web/cart" element={<WebCartPage />} />
+            <Route path="/web/checkout" element={<WebCheckoutPage />} />
             <Route path="/web/login" element={<WebLoginPage />} />
             <Route path="/web/chat" element={<WebChatPage />} />
             <Route path="/web/help" element={<WebHelpPage />} />
-            <Route path="/web/virtual-fitting/:id" element={<VirtualFittingPage />} />
-            <Route path="/web/virtual-trial/:id" element={<VirtualTrialPage />} />
-            <Route path="/web/accessories-trial/:id" element={<VirtualTrialPage />} />
+            <Route path="/web/virtual-fitting/:id" element={<WebVirtualFittingPage />} />
+            <Route path="/web/virtual-trial/:id" element={<WebVirtualTrialPage />} />
+            <Route path="/web/accessories-trial/:id" element={<WebVirtualTrialPage />} />
             <Route path="/web/wishlist" element={<WishlistPage />} />
             <Route path="/web/register" element={<RegisterPage />} />
             <Route path="/web/forgot-password" element={<ForgotPasswordPage />} />
+            
+            {/* Admin Routes */}
+            <Route path="/admin/products" element={<AdminProductsPage />} />
+            <Route path="/admin/products/new" element={<AdminProductForm />} />
+            <Route path="/admin/products/edit/:id" element={<AdminProductForm />} />
             
             {/* 404 Route */}
             <Route path="*" element={<NotFound />} />

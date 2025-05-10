@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Star } from 'lucide-react';
 import { Product } from '../data/products';
 
@@ -9,8 +9,12 @@ interface ProductCardProps {
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const location = useLocation();
+  const isWebView = location.pathname.startsWith('/web');
+  const productLink = isWebView ? `/web/product/${product.id}` : `/product/${product.id}`;
+
   return (
-    <Link to={`/product/${product.id}`} className="block">
+    <Link to={productLink} className="block">
       <div className="glass-card p-3 h-full transition-transform hover:scale-105">
         <div className="aspect-square mb-3 bg-gray-100 rounded-lg overflow-hidden">
           <img 

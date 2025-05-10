@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, CreditCard, Truck } from 'lucide-react';
@@ -103,10 +102,21 @@ const CheckoutPage = () => {
       description: "Thank you for your purchase",
     });
     
-    // In a real app, we would process payment and create order here
+    // Prepare order data for order summary page
+    const selectedShipping = shippingOptions.find(option => option.id === shippingOption);
+    const orderData = {
+      address,
+      shippingMethod: selectedShipping,
+      paymentMethod: paymentMethods.find(method => method.id === paymentMethod)?.name || 'Cash on Delivery',
+      items: cartItems.map(item => ({
+        name: item.product?.name,
+        price: item.product?.price,
+        quantity: item.quantity
+      }))
+    };
     
-    // Navigate to order confirmation
-    navigate('/order-confirmation');
+    // Navigate to order summary page with order data
+    navigate('/order-summary', { state: { orderData } });
   };
   
   return (

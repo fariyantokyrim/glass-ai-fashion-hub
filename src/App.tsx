@@ -19,6 +19,7 @@ import VirtualTrialPage from "./pages/VirtualTrialPage";
 import ProfilePage from "./pages/ProfilePage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
+import OrderSummaryPage from "./pages/OrderSummaryPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
@@ -36,6 +37,7 @@ import WebProductDetail from "./pages/web/WebProductDetail";
 import WebProfilePage from "./pages/web/WebProfilePage";
 import WebCartPage from "./pages/web/WebCartPage";
 import WebCheckoutPage from "./pages/web/WebCheckoutPage";
+import WebOrderSummaryPage from "./pages/web/WebOrderSummaryPage";
 import WebChatPage from "./pages/web/WebChatPage";
 import WebHelpPage from "./pages/web/WebHelpPage";
 import WebMyOrdersPage from "./pages/web/WebMyOrdersPage";
@@ -80,6 +82,7 @@ const App = () => (
             <Route path="/wishlist" element={<WishlistPage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/order-summary" element={<OrderSummaryPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
@@ -96,6 +99,7 @@ const App = () => (
             <Route path="/web/orders" element={<WebMyOrdersPage />} />
             <Route path="/web/cart" element={<WebCartPage />} />
             <Route path="/web/checkout" element={<WebCheckoutPage />} />
+            <Route path="/web/order-summary" element={<WebOrderSummaryPage />} />
             <Route path="/web/login" element={<WebLoginPage />} />
             <Route path="/web/chat" element={<WebChatPage />} />
             <Route path="/web/help" element={<WebHelpPage />} />

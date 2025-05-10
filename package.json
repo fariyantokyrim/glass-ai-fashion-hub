@@ -1,5 +1,9 @@
 {
-  "name": "vite_react_shadcn_ts",
+  "name": "fandi-visuai",
+  "author": {
+    "name": "Fandi A Riyanto",
+    "url": "https://www.linkedin.com/in/fandiar"
+  },
   "private": true,
   "version": "0.0.0",
   "type": "module",

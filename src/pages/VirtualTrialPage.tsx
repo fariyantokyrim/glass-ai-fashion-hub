@@ -182,7 +182,7 @@ const VirtualTrialPage = () => {
             <div className="glass-card p-6 flex flex-col items-center">
               <Camera size={48} className="mb-4 text-primary" />
               <h2 className="text-xl font-semibold mb-2">
-                {isCosmetics ? "AI Makeup Trial" : "AI Accessories Try-On"}
+                {isCosmetics ? "AI Cosmetics Trial" : "AI Accessories Try-On"}
               </h2>
               
               <div className="w-full aspect-square bg-gray-100 rounded-lg overflow-hidden mb-6 relative">

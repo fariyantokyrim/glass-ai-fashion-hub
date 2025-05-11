@@ -5,20 +5,47 @@ import { products, Product } from '../../data/products';
 import { Button } from '../../components/ui/button';
 import { Plus, Edit, Trash2 } from 'lucide-react';
 import { useToast } from '../../hooks/use-toast';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "../../components/ui/alert-dialog";
 
 const AdminProductsPage = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [productsList, setProductsList] = useState<Product[]>(products);
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
+  const [deleteProductId, setDeleteProductId] = useState<string | null>(null);
+
+  const handleAddProduct = () => {
+    navigate('/admin/products/new');
+  };
 
   const handleDeleteProduct = (id: string) => {
-    setProductsList(prev => prev.filter(product => product.id !== id));
-    toast({
-      title: "Product deleted",
-      description: "The product has been successfully deleted",
-    });
+    setDeleteProductId(id);
+  };
+
+  const confirmDelete = () => {
+    if (deleteProductId) {
+      setProductsList(prev => prev.filter(product => product.id !== deleteProductId));
+      toast({
+        title: "Product deleted",
+        description: "The product has been successfully deleted",
+      });
+      setDeleteProductId(null);
+    }
+  };
+
+  const cancelDelete = () => {
+    setDeleteProductId(null);
   };
 
   // Improved search functionality
@@ -37,12 +64,10 @@ const AdminProductsPage = () => {
     <AdminLayout>
       <div className="glass-card p-6 mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Product Management</h1>
-        <Link to="/admin/products/new">
-          <Button className="gap-2">
-            <Plus size={16} />
-            Add Product
-          </Button>
-        </Link>
+        <Button className="gap-2" onClick={handleAddProduct}>
+          <Plus size={16} />
+          Add Product
+        </Button>
       </div>
 
       <div className="glass-card p-6 mb-6">
@@ -133,6 +158,23 @@ const AdminProductsPage = () => {
           </div>
         )}
       </div>
+
+      <AlertDialog open={!!deleteProductId} onOpenChange={(open) => !open && setDeleteProductId(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete the product from your database.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={cancelDelete}>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </AdminLayout>
   );
 };

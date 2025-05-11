@@ -1,3 +1,4 @@
+
 export type Product = {
   id: string;
   name: string;
@@ -132,7 +133,8 @@ export const products: Product[] = [
     price: 18.99,
     category: "cosmetics",
     subcategory: "makeup",
-    image: "/mascara.jpg",
+    image:
+      "https://images.unsplash.com/photo-1631006031333-3a307d880723?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80",
     description: "Smudge-proof, long-lasting mascara for voluminous lashes.",
     brand: "LashLove",
     colors: ["Black", "Brown-Black"],

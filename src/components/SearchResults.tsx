@@ -2,12 +2,15 @@
 import React from 'react';
 import { ProductCard } from './ProductCard';
 import { searchProducts, Product } from '../data/products';
+import { useLocation } from 'react-router-dom';
 
 interface SearchResultsProps {
   query: string;
 }
 
 export const SearchResults: React.FC<SearchResultsProps> = ({ query }) => {
+  const location = useLocation();
+  const isWebView = location.pathname.startsWith('/web');
   const results = query ? searchProducts(query) : [];
 
   if (!query.trim()) {
@@ -21,7 +24,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({ query }) => {
       </div>
       
       {results.length > 0 ? (
-        <div className="grid grid-cols-2 gap-3">
+        <div className={`grid ${isWebView ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4' : 'grid-cols-2'} gap-3`}>
           {results.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

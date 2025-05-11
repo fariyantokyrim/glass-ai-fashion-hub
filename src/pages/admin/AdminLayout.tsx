@@ -1,6 +1,7 @@
+
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Package, Tag, ShoppingCart, Users, Settings } from "lucide-react";
+import { Package, Tag, ShoppingCart, Users, LogOut } from "lucide-react";
 
 type AdminLayoutProps = {
   children: React.ReactNode;
@@ -13,6 +14,13 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
     return location.pathname === path ? "bg-primary/20 text-primary" : "";
   };
 
+  const handleLogout = () => {
+    // In a real app, this would be connected to authentication
+    console.log("Logging out...");
+    // Redirect to login page
+    window.location.href = "/login";
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex">
       {/* Sidebar */}
@@ -21,6 +29,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           <Link to="/admin" className="flex items-center">
             <h1 className="font-bold text-xl">VisuAI Admin</h1>
           </Link>
+          <div className="text-sm mt-2 text-muted-foreground">Welcome, Admin User</div>
         </div>
 
         <nav className="p-4">
@@ -69,19 +78,18 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                 <span>Customers</span>
               </Link>
             </li>
-            <li>
-              <Link
-                to="/admin/settings"
-                className={`flex items-center px-4 py-3 rounded-lg hover:bg-white/20 ${isActive(
-                  "/admin/settings"
-                )}`}
-              >
-                <Settings size={18} className="mr-3" />
-                <span>Settings</span>
-              </Link>
-            </li>
           </ul>
         </nav>
+
+        <div className="absolute bottom-4 w-full p-4">
+          <button
+            onClick={handleLogout}
+            className="flex w-full items-center px-4 py-3 rounded-lg hover:bg-white/20 text-red-600"
+          >
+            <LogOut size={18} className="mr-3" />
+            <span>Logout</span>
+          </button>
+        </div>
       </aside>
 
       {/* Main content */}

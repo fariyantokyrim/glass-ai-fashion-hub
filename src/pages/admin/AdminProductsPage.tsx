@@ -21,11 +21,16 @@ const AdminProductsPage = () => {
     });
   };
 
+  // Improved search functionality
   const filteredProducts = productsList.filter(product => 
     (categoryFilter === 'all' || product.category === categoryFilter) && 
-    (product.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-     product.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
-     product.description.toLowerCase().includes(searchTerm.toLowerCase()))
+    (
+      product.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      product.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.subcategory.toLowerCase().includes(searchTerm.toLowerCase())
+    )
   );
 
   return (

@@ -48,6 +48,9 @@ import WebVirtualFittingPage from "./pages/web/WebVirtualFittingPage";
 // Admin Pages
 import AdminProductsPage from "./pages/admin/AdminProductsPage";
 import AdminProductForm from "./pages/admin/AdminProductForm";
+import AdminCategoriesPage from "./pages/admin/AdminCategoriesPage";
+import AdminOrdersPage from "./pages/admin/AdminOrdersPage";
+import AdminCustomersPage from "./pages/admin/AdminCustomersPage";
 
 // Auto-redirect based on device
 const ResponsiveRedirect = () => {
@@ -114,6 +117,9 @@ const App = () => (
             <Route path="/admin/products" element={<AdminProductsPage />} />
             <Route path="/admin/products/new" element={<AdminProductForm />} />
             <Route path="/admin/products/edit/:id" element={<AdminProductForm />} />
+            <Route path="/admin/categories" element={<AdminCategoriesPage />} />
+            <Route path="/admin/orders" element={<AdminOrdersPage />} />
+            <Route path="/admin/customers" element={<AdminCustomersPage />} />
             
             {/* 404 Route */}
             <Route path="*" element={<NotFound />} />

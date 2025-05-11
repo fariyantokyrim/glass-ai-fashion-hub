@@ -44,6 +44,7 @@ import WebMyOrdersPage from "./pages/web/WebMyOrdersPage";
 import WebLoginPage from "./pages/web/WebLoginPage";
 import WebVirtualTrialPage from "./pages/web/WebVirtualTrialPage";
 import WebVirtualFittingPage from "./pages/web/WebVirtualFittingPage";
+import WebWishlistPage from "./pages/web/WebWishlistPage";
 
 // Admin Pages
 import AdminProductsPage from "./pages/admin/AdminProductsPage";
@@ -109,7 +110,7 @@ const App = () => (
             <Route path="/web/virtual-fitting/:id" element={<WebVirtualFittingPage />} />
             <Route path="/web/virtual-trial/:id" element={<WebVirtualTrialPage />} />
             <Route path="/web/accessories-trial/:id" element={<WebVirtualTrialPage />} />
-            <Route path="/web/wishlist" element={<WishlistPage />} />
+            <Route path="/web/wishlist" element={<WebWishlistPage />} />
             <Route path="/web/register" element={<RegisterPage />} />
             <Route path="/web/forgot-password" element={<ForgotPasswordPage />} />
             

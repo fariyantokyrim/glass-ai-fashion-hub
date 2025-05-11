@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { products } from '../../data/products';
 import { ProductCard } from '../../components/ProductCard';
-import WebLayout from '../../components/layouts/WebLayout';
+import { WebLayout } from '../../components/layouts/WebLayout';
 import { Button } from '../../components/ui/button';
 import { ArrowLeft, Heart } from 'lucide-react';
 

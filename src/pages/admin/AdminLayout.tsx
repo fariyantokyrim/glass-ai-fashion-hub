@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingBag, Users, Categories, Package, Home, Settings } from 'lucide-react';
+import { ShoppingBag, Users, FolderOpen, Package, Home, Settings } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 
 interface AdminLayoutProps {
@@ -14,7 +14,7 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
   // Navigation menu items with icons
   const navItems = [
     { path: '/admin/products', label: 'Products', Icon: Package },
-    { path: '/admin/categories', label: 'Categories', Icon: Categories },
+    { path: '/admin/categories', label: 'Categories', Icon: FolderOpen },
     { path: '/admin/orders', label: 'Orders', Icon: ShoppingBag },
     { path: '/admin/customers', label: 'Customers', Icon: Users },
     { path: '/admin/account-settings', label: 'Account Settings', Icon: Settings },

@@ -31,7 +31,7 @@ const AdminProductForm = () => {
   const [currentSize, setCurrentSize] = useState('');
   
   useEffect(() => {
-    if (isEditMode) {
+    if (isEditMode && id !== 'new') {
       const existingProduct = products.find(p => p.id === id);
       if (existingProduct) {
         setProduct(existingProduct);

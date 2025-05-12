@@ -1,99 +1,64 @@
 
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Package, Tag, ShoppingCart, Users, LogOut } from "lucide-react";
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { ShoppingBag, Users, Categories, Package, Home, Settings } from 'lucide-react';
+import { Button } from '../../components/ui/button';
 
-type AdminLayoutProps = {
+interface AdminLayoutProps {
   children: React.ReactNode;
-};
+}
 
-export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
+export const AdminLayout = ({ children }: AdminLayoutProps) => {
   const location = useLocation();
 
-  const isActive = (path: string) => {
-    return location.pathname === path ? "bg-primary/20 text-primary" : "";
-  };
-
-  const handleLogout = () => {
-    // In a real app, this would be connected to authentication
-    console.log("Logging out...");
-    // Redirect to login page
-    window.location.href = "/login";
-  };
-
+  // Navigation menu items with icons
+  const navItems = [
+    { path: '/admin/products', label: 'Products', Icon: Package },
+    { path: '/admin/categories', label: 'Categories', Icon: Categories },
+    { path: '/admin/orders', label: 'Orders', Icon: ShoppingBag },
+    { path: '/admin/customers', label: 'Customers', Icon: Users },
+    { path: '/admin/account-settings', label: 'Account Settings', Icon: Settings },
+  ];
+  
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex">
+    <div className="flex min-h-screen bg-gradient-to-br from-purple-900 to-blue-900">
       {/* Sidebar */}
-      <aside className="w-64 glass border-r border-white/30 fixed left-0 top-0 h-full z-30">
-        <div className="p-6 border-b border-white/30">
-          <Link to="/admin" className="flex items-center">
-            <h1 className="font-bold text-xl">VisuAI Admin</h1>
+      <aside className="w-64 bg-black/30 backdrop-blur-xl border-r border-white/10">
+        <div className="p-4 border-b border-white/10 flex items-center">
+          <Link to="/" className="flex items-center">
+            <span className="text-xl font-bold text-white ml-2">Admin Panel</span>
           </Link>
-          <div className="text-sm mt-2 text-muted-foreground">Welcome, Admin User</div>
         </div>
-
-        <nav className="p-4">
-          <ul className="space-y-2">
-            <li>
-              <Link
-                to="/admin/products"
-                className={`flex items-center px-4 py-3 rounded-lg hover:bg-white/20 ${isActive(
-                  "/admin/products"
-                )}`}
-              >
-                <Package size={18} className="mr-3" />
-                <span>Products</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/admin/categories"
-                className={`flex items-center px-4 py-3 rounded-lg hover:bg-white/20 ${isActive(
-                  "/admin/categories"
-                )}`}
-              >
-                <Tag size={18} className="mr-3" />
-                <span>Categories</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/admin/orders"
-                className={`flex items-center px-4 py-3 rounded-lg hover:bg-white/20 ${isActive(
-                  "/admin/orders"
-                )}`}
-              >
-                <ShoppingCart size={18} className="mr-3" />
-                <span>Orders</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/admin/customers"
-                className={`flex items-center px-4 py-3 rounded-lg hover:bg-white/20 ${isActive(
-                  "/admin/customers"
-                )}`}
-              >
-                <Users size={18} className="mr-3" />
-                <span>Customers</span>
-              </Link>
-            </li>
-          </ul>
+        
+        <nav className="p-4 space-y-2">
+          <Link to="/web" className="mb-6 flex w-full">
+            <Button variant="outline" size="sm" className="w-full justify-start">
+              <Home className="mr-2 h-4 w-4" />
+              Back to Store
+            </Button>
+          </Link>
+          
+          {navItems.map(({ path, label, Icon }) => (
+            <Link
+              key={path}
+              to={path}
+              className={`flex items-center px-4 py-2 rounded-lg transition-colors ${
+                location.pathname === path || location.pathname.startsWith(`${path}/`)
+                  ? 'bg-white/20 text-white'
+                  : 'text-white/70 hover:bg-white/10 hover:text-white'
+              }`}
+            >
+              <Icon className="h-5 w-5 mr-3" />
+              {label}
+            </Link>
+          ))}
         </nav>
-
-        <div className="absolute bottom-4 w-full p-4">
-          <button
-            onClick={handleLogout}
-            className="flex w-full items-center px-4 py-3 rounded-lg hover:bg-white/20 text-red-600"
-          >
-            <LogOut size={18} className="mr-3" />
-            <span>Logout</span>
-          </button>
-        </div>
       </aside>
-
+      
       {/* Main content */}
-      <div className="ml-64 w-[calc(100%-16rem)] p-6">{children}</div>
+      <main className="flex-1 p-6 overflow-y-auto">
+        {children}
+      </main>
     </div>
   );
 };

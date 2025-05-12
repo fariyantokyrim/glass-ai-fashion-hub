@@ -45,6 +45,7 @@ import WebLoginPage from "./pages/web/WebLoginPage";
 import WebVirtualTrialPage from "./pages/web/WebVirtualTrialPage";
 import WebVirtualFittingPage from "./pages/web/WebVirtualFittingPage";
 import WebWishlistPage from "./pages/web/WebWishlistPage";
+import WebAccountSettingsPage from "./pages/web/WebAccountSettingsPage";
 
 // Admin Pages
 import AdminProductsPage from "./pages/admin/AdminProductsPage";
@@ -52,6 +53,7 @@ import AdminProductForm from "./pages/admin/AdminProductForm";
 import AdminCategoriesPage from "./pages/admin/AdminCategoriesPage";
 import AdminOrdersPage from "./pages/admin/AdminOrdersPage";
 import AdminCustomersPage from "./pages/admin/AdminCustomersPage";
+import AdminAccountSettingsPage from "./pages/admin/AdminAccountSettingsPage";
 
 // Auto-redirect based on device
 const ResponsiveRedirect = () => {
@@ -113,6 +115,7 @@ const App = () => (
             <Route path="/web/wishlist" element={<WebWishlistPage />} />
             <Route path="/web/register" element={<RegisterPage />} />
             <Route path="/web/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/web/account-settings" element={<WebAccountSettingsPage />} />
             
             {/* Admin Routes */}
             <Route path="/admin/products" element={<AdminProductsPage />} />
@@ -121,6 +124,7 @@ const App = () => (
             <Route path="/admin/categories" element={<AdminCategoriesPage />} />
             <Route path="/admin/orders" element={<AdminOrdersPage />} />
             <Route path="/admin/customers" element={<AdminCustomersPage />} />
+            <Route path="/admin/account-settings" element={<AdminAccountSettingsPage />} />
             
             {/* 404 Route */}
             <Route path="*" element={<NotFound />} />

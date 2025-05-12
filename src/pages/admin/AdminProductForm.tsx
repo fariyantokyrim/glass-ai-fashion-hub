@@ -44,6 +44,7 @@ const AdminProductForm = () => {
         });
       }
     }
+    // Don't need to do anything for new products - we already have default state
   }, [id, isEditMode, navigate, toast]);
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {

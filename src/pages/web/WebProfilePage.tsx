@@ -101,7 +101,7 @@ const WebProfilePage = () => {
                   </div>
                 </Link>
                 
-                <div className="glass-button p-6 rounded-xl hover:bg-white/30 transition-all">
+                <Link to="/web/account-settings" className="glass-button p-6 rounded-xl hover:bg-white/30 transition-all">
                   <div className="flex items-center">
                     <Settings size={24} className="mr-4" />
                     <div>
@@ -109,7 +109,7 @@ const WebProfilePage = () => {
                       <p className="text-sm text-muted-foreground">Manage your account</p>
                     </div>
                   </div>
-                </div>
+                </Link>
                 
                 <Link to="/web/help" className="glass-button p-6 rounded-xl hover:bg-white/30 transition-all">
                   <div className="flex items-center">

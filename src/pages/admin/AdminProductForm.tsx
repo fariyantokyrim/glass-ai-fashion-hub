@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AdminLayout } from './AdminLayout';
@@ -11,7 +10,7 @@ const AdminProductForm = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const isEditMode = id !== 'new';
+  const isEditMode = id && id !== 'new';
   
   const [product, setProduct] = useState<Product>({
     id: '',
@@ -31,7 +30,7 @@ const AdminProductForm = () => {
   const [currentSize, setCurrentSize] = useState('');
   
   useEffect(() => {
-    if (isEditMode && id !== 'new') {
+    if (isEditMode) {
       const existingProduct = products.find(p => p.id === id);
       if (existingProduct) {
         setProduct(existingProduct);

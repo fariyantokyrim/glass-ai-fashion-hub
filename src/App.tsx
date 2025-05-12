@@ -71,29 +71,30 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            {/* Device Detection Route */}
-            <Route path="/" element={<Index />} />
+            {/* Default route: Detect device and redirect */}
+            <Route path="/" element={<ResponsiveRedirect />} />
 
             {/* Mobile Routes */}
-            <Route path="/search" element={<Index />} />
-            <Route path="/product/:id" element={<ProductDetail />} />
-            <Route path="/fashion" element={<FashionPage />} />
-            <Route path="/cosmetics" element={<CosmeticsPage />} />
-            <Route path="/accessories" element={<AccessoriesPage />} />
-            <Route path="/virtual-fitting/:id" element={<VirtualFittingPage />} />
-            <Route path="/virtual-trial/:id" element={<VirtualTrialPage />} />
-            <Route path="/accessories-trial/:id" element={<VirtualTrialPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/orders" element={<MyOrdersPage />} />
-            <Route path="/wishlist" element={<WishlistPage />} />
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/checkout" element={<CheckoutPage />} />
-            <Route path="/order-summary" element={<OrderSummaryPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-            <Route path="/chat" element={<ChatPage />} />
-            <Route path="/help" element={<HelpPage />} />
+            <Route path="/mobile" element={<Index />} />
+            <Route path="/mobile/search" element={<Index />} />
+            <Route path="/mobile/product/:id" element={<ProductDetail />} />
+            <Route path="/mobile/fashion" element={<FashionPage />} />
+            <Route path="/mobile/cosmetics" element={<CosmeticsPage />} />
+            <Route path="/mobile/accessories" element={<AccessoriesPage />} />
+            <Route path="/mobile/virtual-fitting/:id" element={<VirtualFittingPage />} />
+            <Route path="/mobile/virtual-trial/:id" element={<VirtualTrialPage />} />
+            <Route path="/mobile/accessories-trial/:id" element={<VirtualTrialPage />} />
+            <Route path="/mobile/profile" element={<ProfilePage />} />
+            <Route path="/mobile/orders" element={<MyOrdersPage />} />
+            <Route path="/mobile/wishlist" element={<WishlistPage />} />
+            <Route path="/mobile/cart" element={<CartPage />} />
+            <Route path="/mobile/checkout" element={<CheckoutPage />} />
+            <Route path="/mobile/order-summary" element={<OrderSummaryPage />} />
+            <Route path="/mobile/login" element={<LoginPage />} />
+            <Route path="/mobile/register" element={<RegisterPage />} />
+            <Route path="/mobile/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/mobile/chat" element={<ChatPage />} />
+            <Route path="/mobile/help" element={<HelpPage />} />
             
             {/* Web Routes */}
             <Route path="/web" element={<WebIndex />} />
@@ -125,6 +126,27 @@ const App = () => (
             <Route path="/admin/orders" element={<AdminOrdersPage />} />
             <Route path="/admin/customers" element={<AdminCustomersPage />} />
             <Route path="/admin/account-settings" element={<AdminAccountSettingsPage />} />
+            
+            {/* Maintain backwards compatibility with old routes */}
+            <Route path="/search" element={<Navigate to="/mobile/search" />} />
+            <Route path="/product/:id" element={<Navigate to={`/mobile/product/:id`} />} />
+            <Route path="/fashion" element={<Navigate to="/mobile/fashion" />} />
+            <Route path="/cosmetics" element={<Navigate to="/mobile/cosmetics" />} />
+            <Route path="/accessories" element={<Navigate to="/mobile/accessories" />} />
+            <Route path="/virtual-fitting/:id" element={<Navigate to={`/mobile/virtual-fitting/:id`} />} />
+            <Route path="/virtual-trial/:id" element={<Navigate to={`/mobile/virtual-trial/:id`} />} />
+            <Route path="/accessories-trial/:id" element={<Navigate to={`/mobile/accessories-trial/:id`} />} />
+            <Route path="/profile" element={<Navigate to="/mobile/profile" />} />
+            <Route path="/orders" element={<Navigate to="/mobile/orders" />} />
+            <Route path="/wishlist" element={<Navigate to="/mobile/wishlist" />} />
+            <Route path="/cart" element={<Navigate to="/mobile/cart" />} />
+            <Route path="/checkout" element={<Navigate to="/mobile/checkout" />} />
+            <Route path="/order-summary" element={<Navigate to="/mobile/order-summary" />} />
+            <Route path="/login" element={<Navigate to="/mobile/login" />} />
+            <Route path="/register" element={<Navigate to="/mobile/register" />} />
+            <Route path="/forgot-password" element={<Navigate to="/mobile/forgot-password" />} />
+            <Route path="/chat" element={<Navigate to="/mobile/chat" />} />
+            <Route path="/help" element={<Navigate to="/mobile/help" />} />
             
             {/* 404 Route */}
             <Route path="*" element={<NotFound />} />

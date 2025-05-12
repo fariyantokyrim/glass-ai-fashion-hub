@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingBag, Users, FolderOpen, Package, Home, Settings } from 'lucide-react';
+import { ShoppingBag, Users, FolderOpen, Package, Home, Settings, LogOut } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 
 interface AdminLayoutProps {
@@ -20,14 +20,18 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
     { path: '/admin/account-settings', label: 'Account Settings', Icon: Settings },
   ];
   
+  // User info - in a real app this would come from an auth context
+  const username = "Admin User";
+  
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-purple-900 to-blue-900">
       {/* Sidebar */}
       <aside className="w-64 bg-black/30 backdrop-blur-xl border-r border-white/10">
-        <div className="p-4 border-b border-white/10 flex items-center">
+        <div className="p-4 border-b border-white/10">
           <Link to="/" className="flex items-center">
-            <span className="text-xl font-bold text-white ml-2">Admin Panel</span>
+            <span className="text-xl font-bold text-white ml-2">VisuAI Admin</span>
           </Link>
+          <div className="mt-2 text-sm text-white/70">{username}</div>
         </div>
         
         <nav className="p-4 space-y-2">
@@ -52,12 +56,22 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
               {label}
             </Link>
           ))}
+          
+          {/* Logout button */}
+          <div className="pt-4 mt-4 border-t border-white/10">
+            <Button variant="ghost" className="w-full justify-start text-white/70 hover:text-white hover:bg-white/10">
+              <LogOut className="h-5 w-5 mr-3" />
+              Logout
+            </Button>
+          </div>
         </nav>
       </aside>
       
       {/* Main content */}
-      <main className="flex-1 p-6 overflow-y-auto">
-        {children}
+      <main className="flex-1 p-6 overflow-y-auto bg-gradient-to-br from-blue-900/30 to-purple-900/30 backdrop-blur-md">
+        <div className="glass-card p-6 rounded-lg">
+          {children}
+        </div>
       </main>
     </div>
   );

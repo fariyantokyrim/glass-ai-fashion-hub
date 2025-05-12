@@ -1,35 +1,14 @@
 
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, ShoppingCart, User, MessageSquare, Search } from "lucide-react";
-import { Navigation } from "../Navigation";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { Home, ShoppingCart, User, MessageSquare } from "lucide-react";
 
 export const WebLayout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
-  const isMobile = useIsMobile();
 
   const isActive = (path: string) => {
     return location.pathname === path;
   };
-
-  // For mobile, use the Navigation component
-  if (isMobile) {
-    return (
-      <div className="pb-20">
-        {/* Header with search */}
-        <div className="glass sticky top-0 z-40 px-4 py-3">
-          <div className="text-2xl font-bold text-center">VisuAI</div>
-        </div>
-        
-        {/* Main Content */}
-        <main className="container mx-auto px-4 py-4">{children}</main>
-        
-        {/* Mobile Navigation */}
-        <Navigation />
-      </div>
-    );
-  }
 
   // For desktop, use the web layout
   return (

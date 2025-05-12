@@ -76,6 +76,11 @@
   .scrollbar-none::-webkit-scrollbar {
     display: none;
   }
+  
+  /* Admin panel specific styles */
+  .admin-panel {
+    @apply text-black;
+  }
 }
 
 /* Add shimmer effect for loading states */

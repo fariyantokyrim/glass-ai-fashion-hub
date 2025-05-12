@@ -1,65 +1,75 @@
+
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Home, ShoppingCart, User, MessageSquare, Search } from "lucide-react";
+import { Navigation } from "../Navigation";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 export const WebLayout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
   const isMobile = useIsMobile();
 
-  // If on mobile, redirect to mobile version
-  React.useEffect(() => {
-    if (isMobile) {
-      const currentPath = location.pathname;
-      if (currentPath.startsWith("/web")) {
-        const mobilePath = currentPath.replace("/web", "");
-        window.location.href = mobilePath || "/";
-      }
-    }
-  }, [isMobile, location.pathname]);
-
   const isActive = (path: string) => {
     return location.pathname === path;
   };
 
+  // For mobile, use the Navigation component
+  if (isMobile) {
+    return (
+      <div className="pb-20">
+        {/* Header with search */}
+        <div className="glass sticky top-0 z-40 px-4 py-3">
+          <div className="text-2xl font-bold text-center">VisuAI</div>
+        </div>
+        
+        {/* Main Content */}
+        <main className="container mx-auto px-4 py-4">{children}</main>
+        
+        {/* Mobile Navigation */}
+        <Navigation />
+      </div>
+    );
+  }
+
+  // For desktop, use the web layout
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header Navigation */}
       <header className="glass sticky top-0 z-50">
         <nav className="container mx-auto px-4 py-3 flex items-center justify-between">
-          <Link to="/web" className="text-2xl font-bold">
+          <Link to="/" className="text-2xl font-bold">
             VisuAI
           </Link>
 
           <div className="hidden md:flex items-center space-x-8">
             <Link
-              to="/web"
+              to="/"
               className={`transition-colors hover:text-primary ${
-                isActive("/web") ? "text-primary font-medium" : ""
+                isActive("/") ? "text-primary font-medium" : ""
               }`}
             >
               Home
             </Link>
             <Link
-              to="/web/fashion"
+              to="/fashion"
               className={`transition-colors hover:text-primary ${
-                isActive("/web/fashion") ? "text-primary font-medium" : ""
+                isActive("/fashion") ? "text-primary font-medium" : ""
               }`}
             >
               Fashion
             </Link>
             <Link
-              to="/web/cosmetics"
+              to="/cosmetics"
               className={`transition-colors hover:text-primary ${
-                isActive("/web/cosmetics") ? "text-primary font-medium" : ""
+                isActive("/cosmetics") ? "text-primary font-medium" : ""
               }`}
             >
               Cosmetics
             </Link>
             <Link
-              to="/web/accessories"
+              to="/accessories"
               className={`transition-colors hover:text-primary ${
-                isActive("/web/accessories") ? "text-primary font-medium" : ""
+                isActive("/accessories") ? "text-primary font-medium" : ""
               }`}
             >
               Accessories
@@ -68,25 +78,25 @@ export const WebLayout = ({ children }: { children: React.ReactNode }) => {
 
           <div className="flex items-center space-x-4">
             <Link
-              to="/web/chat"
+              to="/chat"
               className={`p-2 transition-all hover:bg-white/20 ${
-                isActive("/web/chat") ? "text-primary" : ""
+                isActive("/chat") ? "text-primary" : ""
               }`}
             >
               <MessageSquare size={24} />
             </Link>
             <Link
-              to="/web/cart"
+              to="/cart"
               className={`p-2 transition-all hover:bg-white/20 ${
-                isActive("/web/cart") ? "text-primary" : ""
+                isActive("/cart") ? "text-primary" : ""
               }`}
             >
               <ShoppingCart size={24} />
             </Link>
             <Link
-              to="/web/profile"
+              to="/profile"
               className={`p-2 transition-all hover:bg-white/20 ${
-                isActive("/web/profile") ? "text-primary" : ""
+                isActive("/profile") ? "text-primary" : ""
               }`}
             >
               <User size={24} />
@@ -103,9 +113,9 @@ export const WebLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="container mx-auto px-4 text-center text-sm">
           <p>&copy; 2025 VisuAI. All rights reserved.</p>
           <div className="mt-2 flex justify-center space-x-4">
-            <Link to="/web/help">Help & Support</Link>
-            <Link to="/web/terms">Terms</Link>
-            <Link to="/web/privacy">Privacy</Link>
+            <Link to="/help">Help & Support</Link>
+            <Link to="/terms">Terms</Link>
+            <Link to="/privacy">Privacy</Link>
           </div>
         </div>
       </footer>

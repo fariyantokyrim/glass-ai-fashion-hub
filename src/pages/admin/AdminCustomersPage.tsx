@@ -48,7 +48,7 @@ const AdminCustomersPage = () => {
 
   return (
     <AdminLayout>
-      <div className="glass-card p-6 mb-6">
+      <div className="mb-6">
         <h1 className="text-2xl font-bold">Customer Management</h1>
       </div>
 
@@ -68,7 +68,7 @@ const AdminCustomersPage = () => {
         
         <div className="overflow-x-auto">
           <Table>
-            <TableHeader>
+            <TableHeader className="bg-white/10">
               <TableRow className="border-b border-white/30">
                 <TableHead className="px-4 py-3 text-left font-medium text-white">Customer</TableHead>
                 <TableHead className="px-4 py-3 text-left font-medium text-white">Email</TableHead>

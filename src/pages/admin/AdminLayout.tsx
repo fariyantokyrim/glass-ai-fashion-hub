@@ -24,9 +24,9 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
   const username = "Admin User";
   
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-purple-900 to-blue-900">
+    <div className="flex min-h-screen bg-gradient-to-br from-blue-900/30 to-purple-900/30">
       {/* Sidebar */}
-      <aside className="w-64 bg-black/30 backdrop-blur-xl border-r border-white/10">
+      <aside className="w-64 glass border-r border-white/10">
         <div className="p-4 border-b border-white/10">
           <Link to="/" className="flex items-center">
             <span className="text-xl font-bold text-white ml-2">VisuAI Admin</span>
@@ -35,7 +35,7 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
         </div>
         
         <nav className="p-4 space-y-2">
-          <Link to="/web" className="mb-6 flex w-full">
+          <Link to="/" className="mb-6 flex w-full">
             <Button variant="outline" size="sm" className="w-full justify-start">
               <Home className="mr-2 h-4 w-4" />
               Back to Store
@@ -68,7 +68,7 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
       </aside>
       
       {/* Main content */}
-      <main className="flex-1 p-6 overflow-y-auto bg-gradient-to-br from-blue-900/30 to-purple-900/30 backdrop-blur-md">
+      <main className="flex-1 p-6 overflow-y-auto">
         <div className="glass-card p-6 rounded-lg">
           {children}
         </div>

@@ -24,14 +24,14 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
   const username = "Admin User";
   
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-blue-900/30 to-purple-900/30">
+    <div className="flex min-h-screen bg-gradient-to-br from-blue-900/30 to-purple-900/30 admin-panel">
       {/* Sidebar */}
       <aside className="w-64 glass border-r border-white/10">
         <div className="p-4 border-b border-white/10">
           <Link to="/" className="flex items-center">
-            <span className="text-xl font-bold text-white ml-2">VisuAI Admin</span>
+            <span className="text-xl font-bold ml-2">VisuAI Admin</span>
           </Link>
-          <div className="mt-2 text-sm text-white/70">{username}</div>
+          <div className="mt-2 text-sm">{username}</div>
         </div>
         
         <nav className="p-4 space-y-2">
@@ -48,8 +48,8 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
               to={path}
               className={`flex items-center px-4 py-2 rounded-lg transition-colors ${
                 location.pathname === path || location.pathname.startsWith(`${path}/`)
-                  ? 'bg-white/20 text-white'
-                  : 'text-white/70 hover:bg-white/10 hover:text-white'
+                  ? 'bg-white/20'
+                  : 'hover:bg-white/10'
               }`}
             >
               <Icon className="h-5 w-5 mr-3" />
@@ -59,7 +59,7 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
           
           {/* Logout button */}
           <div className="pt-4 mt-4 border-t border-white/10">
-            <Button variant="ghost" className="w-full justify-start text-white/70 hover:text-white hover:bg-white/10">
+            <Button variant="ghost" className="w-full justify-start hover:bg-white/10">
               <LogOut className="h-5 w-5 mr-3" />
               Logout
             </Button>

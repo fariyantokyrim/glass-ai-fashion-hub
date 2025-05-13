@@ -109,6 +109,17 @@
   .admin-panel li {
     @apply text-black;
   }
+  
+  /* Specific overrides for admin sidebar and table headers */
+  .admin-panel aside a,
+  .admin-panel aside span,
+  .admin-panel aside div,
+  .admin-panel th,
+  .admin-panel thead tr,
+  .admin-panel nav a,
+  .admin-panel [class*="text-white"] {
+    @apply text-black !important;
+  }
 }
 
 /* Add shimmer effect for loading states */

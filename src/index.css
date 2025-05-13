@@ -90,7 +90,16 @@
   /* Additional specific overrides for admin panel text color */
   .admin-panel .text-white,
   .admin-panel .text-foreground,
-  .admin-panel .text-muted-foreground {
+  .admin-panel .text-muted-foreground,
+  .admin-panel p,
+  .admin-panel h1,
+  .admin-panel h2,
+  .admin-panel h3,
+  .admin-panel h4,
+  .admin-panel h5,
+  .admin-panel h6,
+  .admin-panel span,
+  .admin-panel div {
     @apply text-black;
   }
 }

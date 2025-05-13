@@ -1,12 +1,12 @@
 
 import React, { useState } from 'react';
-import { ResponsiveLayout } from '../components/layouts/ResponsiveLayout';
-import { Button } from '../components/ui/button';
-import { ArrowLeft, Save } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { ArrowLeft, Save } from 'lucide-react';
+import { Button } from '../components/ui/button';
 import { useToast } from '../hooks/use-toast';
 import { useAuth } from '../contexts/AuthContext';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { ResponsiveLayout } from '../components/layouts/ResponsiveLayout';
 
 const AccountSettingsPage = () => {
   const { user } = useAuth();
@@ -50,120 +50,244 @@ const AccountSettingsPage = () => {
     });
   };
   
-  return (
-    <ResponsiveLayout>
-      <div className={`container mx-auto px-4 py-8 ${!isMobile ? "max-w-3xl" : ""}`}>
-        <div className="mb-6 flex items-center">
-          <Link to="/profile">
-            <Button variant="outline" size="sm" className="mr-4">
-              <ArrowLeft size={16} className="mr-2" />
-              Back to Profile
-            </Button>
-          </Link>
-          <h1 className={isMobile ? "text-xl font-bold" : "text-3xl font-bold"}>Account Settings</h1>
+  // Mobile content
+  const mobileContent = (
+    <>
+      <div className="mb-6 flex items-center">
+        <Link to="/profile">
+          <Button variant="outline" size="sm" className="mr-4">
+            <ArrowLeft size={16} className="mr-2" />
+            Back to Profile
+          </Button>
+        </Link>
+        <h1 className="text-xl font-bold">Account Settings</h1>
+      </div>
+      
+      <form onSubmit={handleSubmit} className="space-y-8">
+        <div className="glass-card p-6">
+          <h2 className="text-xl font-semibold mb-4">Personal Information</h2>
+          
+          <div className="space-y-4">
+            <div>
+              <label className="block mb-2 text-sm font-medium">Full Name</label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="glass-input w-full px-4 py-2 rounded-lg"
+                required
+              />
+            </div>
+            
+            <div>
+              <label className="block mb-2 text-sm font-medium">Email Address</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="glass-input w-full px-4 py-2 rounded-lg"
+                required
+              />
+            </div>
+          </div>
         </div>
         
-        <form onSubmit={handleSubmit} className="space-y-8">
-          <div className="glass-card p-6">
-            <h2 className="text-xl font-semibold mb-4">Personal Information</h2>
+        <div className="glass-card p-6">
+          <h2 className="text-xl font-semibold mb-4">Change Password</h2>
+          
+          <div className="space-y-4">
+            <div>
+              <label className="block mb-2 text-sm font-medium">New Password</label>
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="glass-input w-full px-4 py-2 rounded-lg"
+              />
+              <p className="text-xs text-muted-foreground mt-1">Leave blank to keep your current password</p>
+            </div>
             
-            <div className="space-y-4">
-              <div>
-                <label className="block mb-2 text-sm font-medium">Full Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="glass-input w-full px-4 py-2 rounded-lg"
-                  required
-                />
-              </div>
-              
-              <div>
-                <label className="block mb-2 text-sm font-medium">Email Address</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="glass-input w-full px-4 py-2 rounded-lg"
-                  required
-                />
-              </div>
+            <div>
+              <label className="block mb-2 text-sm font-medium">Confirm New Password</label>
+              <input
+                type="password"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                className="glass-input w-full px-4 py-2 rounded-lg"
+              />
             </div>
           </div>
+        </div>
+        
+        <div className="glass-card p-6">
+          <h2 className="text-xl font-semibold mb-4">Notification Preferences</h2>
           
-          <div className="glass-card p-6">
-            <h2 className="text-xl font-semibold mb-4">Change Password</h2>
+          <div className="space-y-4">
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="notificationsEnabled"
+                name="notificationsEnabled"
+                checked={formData.notificationsEnabled}
+                onChange={handleChange}
+                className="mr-3 h-4 w-4"
+              />
+              <label htmlFor="notificationsEnabled" className="text-sm">
+                Receive order status updates and shipping notifications
+              </label>
+            </div>
             
-            <div className="space-y-4">
-              <div>
-                <label className="block mb-2 text-sm font-medium">New Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="glass-input w-full px-4 py-2 rounded-lg"
-                />
-                <p className="text-xs text-muted-foreground mt-1">Leave blank to keep your current password</p>
-              </div>
-              
-              <div>
-                <label className="block mb-2 text-sm font-medium">Confirm New Password</label>
-                <input
-                  type="password"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  className="glass-input w-full px-4 py-2 rounded-lg"
-                />
-              </div>
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="marketingEnabled"
+                name="marketingEnabled"
+                checked={formData.marketingEnabled}
+                onChange={handleChange}
+                className="mr-3 h-4 w-4"
+              />
+              <label htmlFor="marketingEnabled" className="text-sm">
+                Receive marketing emails about new products and promotions
+              </label>
             </div>
           </div>
+        </div>
+        
+        <div className="flex justify-end">
+          <Button type="submit" className="gap-2">
+            <Save size={16} />
+            Save Changes
+          </Button>
+        </div>
+      </form>
+    </>
+  );
+  
+  // Desktop content
+  const desktopContent = (
+    <div className="max-w-3xl mx-auto">
+      <div className="mb-6 flex items-center">
+        <Link to="/profile">
+          <Button variant="outline" size="sm" className="mr-4">
+            <ArrowLeft size={16} className="mr-2" />
+            Back to Profile
+          </Button>
+        </Link>
+        <h1 className="text-3xl font-bold">Account Settings</h1>
+      </div>
+      
+      <form onSubmit={handleSubmit} className="space-y-8">
+        <div className="glass-card p-6">
+          <h2 className="text-xl font-semibold mb-4">Personal Information</h2>
           
-          <div className="glass-card p-6">
-            <h2 className="text-xl font-semibold mb-4">Notification Preferences</h2>
+          <div className="space-y-4">
+            <div>
+              <label className="block mb-2 text-sm font-medium">Full Name</label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="glass-input w-full px-4 py-2 rounded-lg"
+                required
+              />
+            </div>
             
-            <div className="space-y-4">
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  id="notificationsEnabled"
-                  name="notificationsEnabled"
-                  checked={formData.notificationsEnabled}
-                  onChange={handleChange}
-                  className="mr-3 h-4 w-4"
-                />
-                <label htmlFor="notificationsEnabled" className="text-sm">
-                  Receive order status updates and shipping notifications
-                </label>
-              </div>
-              
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  id="marketingEnabled"
-                  name="marketingEnabled"
-                  checked={formData.marketingEnabled}
-                  onChange={handleChange}
-                  className="mr-3 h-4 w-4"
-                />
-                <label htmlFor="marketingEnabled" className="text-sm">
-                  Receive marketing emails about new products and promotions
-                </label>
-              </div>
+            <div>
+              <label className="block mb-2 text-sm font-medium">Email Address</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="glass-input w-full px-4 py-2 rounded-lg"
+                required
+              />
             </div>
           </div>
+        </div>
+        
+        <div className="glass-card p-6">
+          <h2 className="text-xl font-semibold mb-4">Change Password</h2>
           
-          <div className="flex justify-end">
-            <Button type="submit" className="gap-2">
-              <Save size={16} />
-              Save Changes
-            </Button>
+          <div className="space-y-4">
+            <div>
+              <label className="block mb-2 text-sm font-medium">New Password</label>
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="glass-input w-full px-4 py-2 rounded-lg"
+              />
+              <p className="text-xs text-muted-foreground mt-1">Leave blank to keep your current password</p>
+            </div>
+            
+            <div>
+              <label className="block mb-2 text-sm font-medium">Confirm New Password</label>
+              <input
+                type="password"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                className="glass-input w-full px-4 py-2 rounded-lg"
+              />
+            </div>
           </div>
-        </form>
+        </div>
+        
+        <div className="glass-card p-6">
+          <h2 className="text-xl font-semibold mb-4">Notification Preferences</h2>
+          
+          <div className="space-y-4">
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="notificationsEnabled"
+                name="notificationsEnabled"
+                checked={formData.notificationsEnabled}
+                onChange={handleChange}
+                className="mr-3 h-4 w-4"
+              />
+              <label htmlFor="notificationsEnabled" className="text-sm">
+                Receive order status updates and shipping notifications
+              </label>
+            </div>
+            
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="marketingEnabled"
+                name="marketingEnabled"
+                checked={formData.marketingEnabled}
+                onChange={handleChange}
+                className="mr-3 h-4 w-4"
+              />
+              <label htmlFor="marketingEnabled" className="text-sm">
+                Receive marketing emails about new products and promotions
+              </label>
+            </div>
+          </div>
+        </div>
+        
+        <div className="flex justify-end">
+          <Button type="submit" className="gap-2">
+            <Save size={16} />
+            Save Changes
+          </Button>
+        </div>
+      </form>
+    </div>
+  );
+  
+  return (
+    <ResponsiveLayout>
+      <div className="container mx-auto px-4 py-8">
+        {isMobile ? mobileContent : desktopContent}
       </div>
     </ResponsiveLayout>
   );

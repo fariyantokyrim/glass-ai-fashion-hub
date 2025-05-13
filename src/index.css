@@ -81,6 +81,18 @@
   .admin-panel {
     @apply text-black;
   }
+
+  /* Ensure all text in admin panels is black */
+  .admin-panel * {
+    @apply text-black;
+  }
+  
+  /* Additional specific overrides for admin panel text color */
+  .admin-panel .text-white,
+  .admin-panel .text-foreground,
+  .admin-panel .text-muted-foreground {
+    @apply text-black;
+  }
 }
 
 /* Add shimmer effect for loading states */

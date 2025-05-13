@@ -1,7 +1,10 @@
+
 import React, { useState } from "react";
 import { Navigation } from "../components/Navigation";
 import { ArrowLeft, Send } from "lucide-react";
 import { Link } from "react-router-dom";
+import { ResponsiveLayout } from "../components/layouts/ResponsiveLayout";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface Message {
   id: string;
@@ -20,6 +23,7 @@ const ChatPage = () => {
       timestamp: new Date(),
     },
   ]);
+  const isMobile = useIsMobile();
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -81,8 +85,9 @@ const ChatPage = () => {
     }, 1000);
   };
 
-  return (
-    <div className="pb-20 flex flex-col h-screen">
+  // Mobile content
+  const mobileContent = (
+    <div className="flex flex-col h-screen pb-20">
       {/* Header */}
       <div className="glass sticky top-0 z-40 px-4 py-3">
         <div className="flex items-center">
@@ -148,9 +153,75 @@ const ChatPage = () => {
           </button>
         </form>
       </div>
-
-      <Navigation />
     </div>
+  );
+
+  // Desktop content (based on WebChatPage)
+  const desktopContent = (
+    <div className="max-w-4xl mx-auto">
+      <h1 className="text-3xl font-bold mb-6">AI Assistant</h1>
+
+      <div className="glass-card p-4 h-[600px] flex flex-col">
+        {/* Chat messages */}
+        <div className="flex-1 overflow-y-auto p-4">
+          <div className="space-y-4">
+            {messages.map((message) => (
+              <div
+                key={message.id}
+                className={`flex ${
+                  message.sender === "user" ? "justify-end" : "justify-start"
+                }`}
+              >
+                <div
+                  className={`max-w-[80%] p-4 rounded-xl ${
+                    message.sender === "user"
+                      ? "bg-primary/20 rounded-tr-none"
+                      : "glass-card rounded-tl-none"
+                  }`}
+                >
+                  <p>{message.content}</p>
+                  <p className="text-xs text-right text-muted-foreground mt-1">
+                    {message.timestamp.toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Message input */}
+        <div className="p-4 glass rounded-xl">
+          <form onSubmit={handleSendMessage} className="flex items-center">
+            <input
+              type="text"
+              value={inputMessage}
+              onChange={(e) => setInputMessage(e.target.value)}
+              placeholder="Type a message..."
+              className="flex-1 glass-input rounded-full px-4 py-3"
+            />
+            <button
+              type="submit"
+              className="glass-button ml-2 p-3 rounded-full transition-all hover:bg-white/30"
+              disabled={!inputMessage.trim()}
+            >
+              <Send
+                size={20}
+                className={!inputMessage.trim() ? "opacity-50" : ""}
+              />
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <ResponsiveLayout>
+      {isMobile ? mobileContent : desktopContent}
+    </ResponsiveLayout>
   );
 };
 

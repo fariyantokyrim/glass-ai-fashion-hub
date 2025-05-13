@@ -18,6 +18,35 @@ const AccessoriesPage = () => {
     setSearchQuery(query);
   };
 
+  // Mobile view content
+  const mobileContent = (
+    <>
+      {/* Search bar header */}
+      <div className="flex items-center mb-2">
+        <Link to="/" className="glass-button p-2 mr-3 rounded-full transition-all hover:bg-white/30">
+          <ArrowLeft size={20} />
+        </Link>
+        <h1 className="text-xl font-semibold">Accessories</h1>
+      </div>
+      
+      <SearchBar onSearch={handleSearch} />
+
+      {searchQuery ? (
+        <div className="mt-4">
+          <SearchResults query={searchQuery} />
+        </div>
+      ) : (
+        <div className="mt-4">
+          <div className="grid grid-cols-2 gap-3">
+            {accessoriesProducts.map(product => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </div>
+      )}
+    </>
+  );
+
   // Desktop view content
   const desktopContent = (
     <div className="max-w-6xl mx-auto">
@@ -54,36 +83,6 @@ const AccessoriesPage = () => {
         </>
       )}
     </div>
-  );
-
-  // Mobile view content
-  const mobileContent = (
-    <>
-      {/* Header */}
-      <div className="glass sticky top-0 z-40 px-4 py-3">
-        <div className="flex items-center mb-2">
-          <Link to="/" className="glass-button p-2 mr-3 rounded-full transition-all hover:bg-white/30">
-            <ArrowLeft size={20} />
-          </Link>
-          <h1 className="text-xl font-semibold">Accessories</h1>
-        </div>
-        <SearchBar onSearch={handleSearch} />
-      </div>
-
-      {searchQuery ? (
-        <div className="p-4">
-          <SearchResults query={searchQuery} />
-        </div>
-      ) : (
-        <div className="p-4">
-          <div className="grid grid-cols-2 gap-3">
-            {accessoriesProducts.map(product => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        </div>
-      )}
-    </>
   );
 
   return (

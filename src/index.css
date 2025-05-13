@@ -99,7 +99,14 @@
   .admin-panel h5,
   .admin-panel h6,
   .admin-panel span,
-  .admin-panel div {
+  .admin-panel div,
+  .admin-panel a,
+  .admin-panel button,
+  .admin-panel input,
+  .admin-panel textarea,
+  .admin-panel select,
+  .admin-panel label,
+  .admin-panel li {
     @apply text-black;
   }
 }

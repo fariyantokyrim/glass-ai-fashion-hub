@@ -5,13 +5,19 @@ import { ProductCard } from '../../components/ProductCard';
 import { getProductsByCategory } from '../../data/products';
 import { SearchBar } from '../../components/SearchBar';
 import { SearchResults } from '../../components/SearchResults';
+import { useNavigate } from 'react-router-dom';
 
 const WebFashionPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const fashionProducts = getProductsByCategory('fashion');
+  const navigate = useNavigate();
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
+  };
+
+  const handleVirtualTryOn = () => {
+    navigate('/web/virtual-fitting/fashion');
   };
 
   return (
@@ -36,7 +42,10 @@ const WebFashionPage = () => {
                 <h2 className="text-xl font-bold mb-2">Virtual Try-On</h2>
                 <p className="text-muted-foreground mb-4 md:mb-0">Try fashion products virtually before you buy!</p>
               </div>
-              <button className="glass-button px-6 py-3 rounded-xl text-base font-medium transition-all hover:bg-white/30">
+              <button 
+                onClick={handleVirtualTryOn}
+                className="glass-button px-6 py-3 rounded-xl text-base font-medium transition-all hover:bg-white/30"
+              >
                 Virtual Try with AI
               </button>
             </div>

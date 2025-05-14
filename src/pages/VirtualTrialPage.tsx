@@ -4,6 +4,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Camera, ChevronLeft, ChevronRight } from 'lucide-react';
 import { getProductById } from '../data/products';
 import { useToast } from '../hooks/use-toast';
+import { ResponsiveLayout } from '../components/layouts/ResponsiveLayout';
+import { VirtualTryPreview } from '../components/ui/virtual-try-preview';
 
 type UserMeasurements = {
   skinTone: string;
@@ -61,6 +63,7 @@ const VirtualTrialPage = () => {
   // Determine the type of product
   const isCosmetics = product?.category === 'cosmetics' || id === 'cosmetics';
   const isAccessories = product?.category === 'accessories' || id === 'accessories';
+  const categoryType = isCosmetics ? 'cosmetics' : isAccessories ? 'accessories' : 'fashion';
 
   if (!isCosmetics && !isAccessories && !product) {
     return (
@@ -179,24 +182,17 @@ const VirtualTrialPage = () => {
           </>
         ) : (
           <div className="flex flex-col items-center justify-center">
-            <div className="glass-card p-6 flex flex-col items-center">
+            <div className="glass-card p-6 flex flex-col items-center w-full">
               <Camera size={48} className="mb-4 text-primary" />
               <h2 className="text-xl font-semibold mb-2">
                 {isCosmetics ? "AI Cosmetics Trial" : "AI Accessories Try-On"}
               </h2>
               
-              <div className="w-full aspect-square bg-gray-100 rounded-lg overflow-hidden mb-6 relative">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="border-2 border-dashed border-gray-300 rounded-full w-32 h-32 flex items-center justify-center">
-                    <div className="w-24 h-24 bg-gray-200 rounded-full">
-                      {/* Face outline */}
-                    </div>
-                  </div>
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-center py-2 text-sm">
-                  {isCosmetics ? "Try on virtual makeup" : "Try on virtual accessories"}
-                </div>
-              </div>
+              <VirtualTryPreview 
+                categoryType={categoryType} 
+                filter={selectedFilter}
+                className="mb-6"
+              />
               
               <div className="w-full mb-6">
                 <div className="flex items-center justify-between mb-2">
@@ -230,7 +226,7 @@ const VirtualTrialPage = () => {
               
               <div className="w-full">
                 <button 
-                  onClick={handleGoBack}
+                  onClick={() => setSubmitted(false)}
                   className="glass-button w-full px-4 py-2 rounded-lg mb-2 transition-all hover:bg-white/30"
                 >
                   Try Different Parameters

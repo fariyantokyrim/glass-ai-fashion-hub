@@ -5,6 +5,7 @@ import { ArrowLeft, Camera, ChevronLeft, ChevronRight } from 'lucide-react';
 import { getProductById } from '../../data/products';
 import { useToast } from '../../hooks/use-toast';
 import { WebLayout } from '../../components/layouts/WebLayout';
+import { VirtualTryPreview } from '../../components/ui/virtual-try-preview';
 
 type UserMeasurements = {
   skinTone: string;
@@ -62,6 +63,7 @@ const WebVirtualTrialPage = () => {
   // Determine the type of product
   const isCosmetics = product?.category === 'cosmetics' || id === 'cosmetics';
   const isAccessories = product?.category === 'accessories' || id === 'accessories';
+  const categoryType = isCosmetics ? 'cosmetics' : isAccessories ? 'accessories' : 'fashion';
 
   if (!isCosmetics && !isAccessories && !product) {
     return (
@@ -75,7 +77,7 @@ const WebVirtualTrialPage = () => {
 
   return (
     <WebLayout>
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto px-4 md:px-6">
         <div className="flex items-center mb-8">
           <button onClick={handleGoBack} className="glass-button p-3 rounded-full mr-4 transition-all hover:bg-white/30">
             <ArrowLeft size={20} />
@@ -188,10 +190,8 @@ const WebVirtualTrialPage = () => {
                 <h2 className="text-xl font-semibold">AI-Powered Try-On</h2>
                 <p className="text-muted-foreground mt-2">Fill out the form to see a preview here</p>
               </div>
-              <div className="w-full aspect-square max-w-md mx-auto bg-black/10 rounded-2xl flex items-center justify-center border-2 border-dashed border-white/30">
-                <p className="text-muted-foreground text-center px-8">
-                  Your virtual try-on will appear here after submitting your information
-                </p>
+              <div className="w-full max-w-md mx-auto">
+                <VirtualTryPreview showLabel={false} />
               </div>
             </div>
           </div>
@@ -231,9 +231,9 @@ const WebVirtualTrialPage = () => {
                 </div>
               </div>
               
-              <div className="flex space-x-4">
+              <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
                 <button 
-                  onClick={handleGoBack}
+                  onClick={() => setSubmitted(false)}
                   className="glass-button flex-1 px-4 py-3 rounded-lg transition-all hover:bg-white/30"
                 >
                   Try Different Parameters
@@ -248,17 +248,11 @@ const WebVirtualTrialPage = () => {
             </div>
             
             <div className="glass-card p-6 flex items-center justify-center">
-              <div className="w-full max-w-md aspect-square bg-gray-100 rounded-2xl overflow-hidden relative">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="border-2 border-dashed border-gray-300 rounded-full w-64 h-64 flex items-center justify-center">
-                    <div className="w-48 h-48 bg-gray-200 rounded-full flex items-center justify-center">
-                      <Camera size={32} className="text-gray-400" />
-                    </div>
-                  </div>
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-center py-3">
-                  {isCosmetics ? "Try on virtual makeup - Filter: " + selectedFilter : "Try on virtual accessories - Filter: " + selectedFilter}
-                </div>
+              <div className="w-full max-w-md">
+                <VirtualTryPreview 
+                  categoryType={categoryType} 
+                  filter={selectedFilter}
+                />
               </div>
             </div>
           </div>

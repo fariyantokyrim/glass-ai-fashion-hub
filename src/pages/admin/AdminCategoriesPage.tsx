@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { AdminLayout } from './AdminLayout';
 import { Button } from '../../components/ui/button';
 import { Plus, Edit, Trash2 } from 'lucide-react';
-import { useToast } from '../../components/ui/use-toast';
+import { useToast } from '../../hooks/use-toast';
 import {
   Table,
   TableHeader,
@@ -20,6 +20,16 @@ import {
   DialogFooter,
   DialogClose
 } from "../../components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "../../components/ui/alert-dialog";
 
 const mockCategories = [
   { id: '1', name: 'Shirts', count: 24, description: 'All types of shirts' },
@@ -35,6 +45,7 @@ const AdminCategoriesPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [currentCategory, setCurrentCategory] = useState<{
     id: string;
     name: string;
@@ -45,11 +56,35 @@ const AdminCategoriesPage = () => {
     name: '',
     description: ''
   });
+  const [newCategory, setNewCategory] = useState({
+    name: '',
+    description: ''
+  });
 
   const handleAddCategory = () => {
+    setIsAddDialogOpen(true);
+    setNewCategory({
+      name: '',
+      description: ''
+    });
+  };
+
+  const handleAddSave = () => {
+    const newId = (Math.max(...categories.map(cat => parseInt(cat.id))) + 1).toString();
+    
+    const categoryToAdd = {
+      id: newId,
+      name: newCategory.name,
+      count: 0,
+      description: newCategory.description
+    };
+    
+    setCategories(prev => [...prev, categoryToAdd]);
+    setIsAddDialogOpen(false);
+    
     toast({
-      title: "Feature coming soon",
-      description: "Adding categories will be available in a future update",
+      title: "Category added",
+      description: `${newCategory.name} has been successfully added`
     });
   };
 
@@ -162,6 +197,41 @@ const AdminCategoriesPage = () => {
         )}
       </div>
 
+      {/* Add Category Dialog */}
+      <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Add New Category</DialogTitle>
+          </DialogHeader>
+          <div className="py-4 space-y-4">
+            <div>
+              <label className="block mb-2 text-sm font-medium">Name</label>
+              <input
+                type="text"
+                className="w-full px-4 py-2 rounded-lg border border-gray-300"
+                value={newCategory.name}
+                onChange={(e) => setNewCategory({...newCategory, name: e.target.value})}
+              />
+            </div>
+            <div>
+              <label className="block mb-2 text-sm font-medium">Description</label>
+              <input
+                type="text"
+                className="w-full px-4 py-2 rounded-lg border border-gray-300"
+                value={newCategory.description}
+                onChange={(e) => setNewCategory({...newCategory, description: e.target.value})}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </DialogClose>
+            <Button onClick={handleAddSave}>Add Category</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       {/* Edit Category Dialog */}
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
         <DialogContent>
@@ -198,22 +268,22 @@ const AdminCategoriesPage = () => {
       </Dialog>
 
       {/* Delete Confirmation Dialog */}
-      <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Confirm Deletion</DialogTitle>
-          </DialogHeader>
-          <p className="py-4">
-            Are you sure you want to delete "{currentCategory?.name}"? This action cannot be undone.
-          </p>
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DialogClose>
-            <Button variant="destructive" onClick={handleDeleteConfirm}>Delete</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Confirm Deletion</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete "{currentCategory?.name}"? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDeleteConfirm} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </AdminLayout>
   );
 };
